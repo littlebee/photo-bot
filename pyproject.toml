@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "photo-bot"
+version = "0.1.0"
+description = "Camera controller that uploads images to twerk-api"
+authors = ["Bee <bee.wilkerson@ymail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+gql = {extras = ["all"], version = "^3.4.1"}
+dpath = "^2.1.6"
+qlient = "^1.0.0"
+opencv-python = "^4.8.0.76"
+
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+flake8-unused-arguments = "^0.0.13"
+black = "^23.1.0"
+pre-commit = "^3.1.0"
+pytest = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

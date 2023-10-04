@@ -73,8 +73,8 @@ def capture():
             "Content-Type": mp_encoder.content_type,
         },
     )
-
-    log.info(f"capture response: {response}")
+    respJson = response.json()
+    log.info(f"capture response: {respJson}")
     return web_utils.json_response(app, response.json())
 
 

@@ -36,6 +36,7 @@ CAMERA_HEIGHT = env_int("CAMERA_HEIGHT", 1536)
 CAMERA_CHANNEL = env_int("CAMERA_CHANNEL", 0)
 # camera rotation if side mounted (90, 270) or upside down mounted (180)
 CAMERA_ROTATION = env_int("CAMERA_ROTATION", 0)
+CAMERA_AUTO_EXPOSURE = env_float("CAMERA_AUTO_EXPOSURE", 0.75)
 
 
 LOG_ALL_MESSAGES = env_bool("LOG_ALL_MESSAGES", False)
@@ -44,5 +45,5 @@ LOG_ALL_MESSAGES = env_bool("LOG_ALL_MESSAGES", False)
 SERVER_PORT = env_int("SERVER_PORT", 5000)
 
 TWERK_PHOTO_UPLOAD_URL = env_string(
-    "TWERK_PHOTO_UPLOAD_URL", "http://minerva.local:3000/api/photoUpload"
+    "TWERK_PHOTO_UPLOAD_URL", "http://athena.local:3000/api/photoUpload"
 )

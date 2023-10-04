@@ -42,6 +42,12 @@ class OpenCvCamera(BaseCamera):
         camera.set(cv2.CAP_PROP_FRAME_WIDTH, c.CAMERA_WIDTH)
         camera.set(cv2.CAP_PROP_FRAME_HEIGHT, c.CAMERA_HEIGHT)
 
+        log.info(f"setting camera auto exposure to {c.CAMERA_AUTO_EXPOSURE}")
+        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, c.CAMERA_AUTO_EXPOSURE)
+
+        # removes flicker from 60hz lights
+        os.system("v4l2-ctl --set-ctrl power_line_frequency=2")
+
         # Doing the rotation using cv2.rotate() was a 6-7 FPS drop
         # Unfortunately, you can't set the rotation on the v4l driver
         # on raspian bullseye before doing the opencv init above - why, idk.

@@ -22,4 +22,3 @@ if [ -f "$pid_file" ]; then
 else
   echo "$pid_file does not exist. skipping"
 fi
-/Users/bee/projects/scatbot/setup.cfg

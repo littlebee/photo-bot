@@ -37,6 +37,7 @@ CAMERA_CHANNEL = env_int("CAMERA_CHANNEL", 0)
 # camera rotation if side mounted (90, 270) or upside down mounted (180)
 CAMERA_ROTATION = env_int("CAMERA_ROTATION", 0)
 CAMERA_AUTO_EXPOSURE = env_float("CAMERA_AUTO_EXPOSURE", 0.75)
+CAMERA_FPS = env_int("CAMERA_FPS", 4)
 
 
 LOG_ALL_MESSAGES = env_bool("LOG_ALL_MESSAGES", False)

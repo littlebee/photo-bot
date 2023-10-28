@@ -42,11 +42,18 @@ class OpenCvCamera(BaseCamera):
         camera.set(cv2.CAP_PROP_FRAME_WIDTH, c.CAMERA_WIDTH)
         camera.set(cv2.CAP_PROP_FRAME_HEIGHT, c.CAMERA_HEIGHT)
 
+        camera.set(cv2.CAP_PROP_FPS, c.CAMERA_FPS)
+
         log.info(f"setting camera auto exposure to {c.CAMERA_AUTO_EXPOSURE}")
         camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, c.CAMERA_AUTO_EXPOSURE)
 
         # removes flicker from 60hz lights
         os.system("v4l2-ctl --set-ctrl power_line_frequency=2")
+
+        # set white balance to 3200k
+        os.system(
+            "v4l2-ctl --set-ctrl white_balance_auto_preset=0,red_balance=3200,blue_balance=1800"
+        )
 
         # Doing the rotation using cv2.rotate() was a 6-7 FPS drop
         # Unfortunately, you can't set the rotation on the v4l driver

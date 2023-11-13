@@ -52,7 +52,7 @@ class OpenCvCamera(BaseCamera):
 
         # set white balance to 3200k
         os.system(
-            "v4l2-ctl --set-ctrl white_balance_auto_preset=0,red_balance=3200,blue_balance=1800"
+            "v4l2-ctl --set-ctrl white_balance_auto_preset=0,red_balance=2600,blue_balance=2100"
         )
 
         # Doing the rotation using cv2.rotate() was a 6-7 FPS drop

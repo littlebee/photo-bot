@@ -32,6 +32,8 @@ rsync --progress --partial \
 --exclude=hires_test_photo.jpg \
 --exclude=testVideoCapture.mp4 \
 --exclude=testPhotoCapture.jpg \
+--exclude=videoCapture.mp4 \
+--exclude=videoCaptureTrimmed.mp4 \
 --exclude=data/ \
 --exclude=logs/ \
 --exclude=.git -avz \

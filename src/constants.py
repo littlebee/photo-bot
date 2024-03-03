@@ -48,3 +48,5 @@ SERVER_PORT = env_int("SERVER_PORT", 5000)
 TWERK_PHOTO_UPLOAD_URL = env_string(
     "TWERK_PHOTO_UPLOAD_URL", "http://athena.local:3000/api/photoUpload"
 )
+
+ROTOBOT_API_URL = env_string("ROTOBOT_API_URL", "http://rotobot.local:5000/")

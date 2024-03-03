@@ -13,7 +13,7 @@ import threading
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from flask import Flask, Response, send_from_directory
+from flask import Flask, Response, request, send_from_directory
 from flask_cors import CORS
 
 import cv2
@@ -21,9 +21,10 @@ import cv2
 import constants
 import web_utils
 import log
+import rotobot_api
 
 from base_camera import BaseCamera
-from camera_opencv import OpenCvCamera
+from camera_opencv import OpenCvCamera, VIDEO_OUTPUT_FILE_TRIMMED
 
 
 app = Flask(__name__)
@@ -55,6 +56,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 @app.route("/capture")
 def capture():
     """Capture a photo and upload it to twerk api/photoUpload"""
+    productId = request.args.get("productId")
+    if productId is None:
+        return web_utils.respond_not_ok(app, "missing required param", "productId")
+
     frame = camera.get_frame()
     cv2.imwrite("capture.jpg", frame)
 
@@ -62,10 +67,48 @@ def capture():
         fields={
             # plain file object, no filename or mime type produces a
             # Content-Disposition header with just the part name
-            "capture.jpg": ("capture.jpg", open("capture.jpg", "rb"), "image/jpg"),
+            "productId": productId,
+            "files": ("capture.jpg", open("capture.jpg", "rb"), "image/jpg"),
         }
     )
 
+    log.info(f"uploading capture to {constants.TWERK_PHOTO_UPLOAD_URL}")
+    response = requests.post(
+        constants.TWERK_PHOTO_UPLOAD_URL,
+        data=mp_encoder,
+        headers={
+            "Content-Type": mp_encoder.content_type,
+        },
+    )
+    respJson = response.json()
+    log.info(f"capture response: {respJson}")
+    return web_utils.json_response(app, response.json())
+
+
+@app.route("/capture_turntable")
+def capture_turntable_video():
+    productId = request.args.get("productId")
+    if productId is None:
+        return web_utils.respond_not_ok(app, "missing required param", "productId")
+
+    rotobot_api.rotate_360()
+    camera.capture_video()
+
+    log.info("invoking Multipart encoder")
+    mp_encoder = MultipartEncoder(
+        fields={
+            # plain file object, no filename or mime type produces a
+            # Content-Disposition header with just the part name
+            "productId": productId,
+            "files": (
+                VIDEO_OUTPUT_FILE_TRIMMED,
+                open(VIDEO_OUTPUT_FILE_TRIMMED, "rb"),
+                "video/mp4",
+            ),
+        }
+    )
+
+    log.info(f"uploading capture to {constants.TWERK_PHOTO_UPLOAD_URL}")
     response = requests.post(
         constants.TWERK_PHOTO_UPLOAD_URL,
         data=mp_encoder,

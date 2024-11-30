@@ -2,16 +2,16 @@
 
 mkdir -p ./logs
 
-
-# user=`echo $USER`
-# if [ "$user" != "root" ]; then
-#   echo "Script must be run as root.  Try 'sudo ./start.sh'"
-#   exit 1
-# fi
-
-sleep=2
+user=`echo $USER`
+if [ "$user" != "root" ]; then
+  echo "Script must be run as root.  You are running as {$user}.  Try 'sudo ./start.sh'"
+  exit 1
+fi
 
 echo "starting photo-bot"
+
+# echo on from here may be a bad ideo
+set -x
 
 logfile="./photo-bot.log"
 

@@ -3,13 +3,16 @@
 # don't stop on error - let other subs exit if any sub fails to exit
 # set -e
 
-# user=`echo $USER`
-# if [ "$user" != "root" ]; then
-#   echo "Script must be run as root.  Try 'sudo ./stop.sh'"
-#   exit 1
-# fi
+user=`echo $USER`
+if [ "$user" != "root" ]; then
+  echo "Script must be run as root.  Try 'sudo ./stop.sh'"
+  exit 1
+fi
 
 echo "stopping photo-bot"
+
+# echo on
+set -x
 
 pid_file="./photo-bot.pid"
 if [[ "photo-bot" == *".pid" ]]; then

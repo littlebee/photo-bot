@@ -11,9 +11,12 @@
 import os
 import threading
 import requests
+import logging
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from flask import Flask, Response, request, send_from_directory
+
+# from flask.logging import logging as flask_logging
 from flask_cors import CORS
 
 import cv2
@@ -29,6 +32,15 @@ from camera_opencv import OpenCvCamera, VIDEO_OUTPUT_FILE_TRIMMED
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+
+class LogFilter(logging.Filter):
+    def filter(self, record):
+        return "GET /ping" not in record.getMessage()
+
+
+# werkzeug is the filter used by flask
+logging.getLogger("werkzeug").addFilter(LogFilter())
 
 camera = OpenCvCamera()
 
